@@ -7,8 +7,18 @@
       data-testid="search-input"
       placeholder="Search services"
     >
+
+    <!-- Loading Indicator -->
+    <div
+      v-if="loading"
+      class="loading"
+    >
+      Loading services...
+    </div>
+
+    <!-- Service List -->
     <ul
-      v-if="services.length"
+      v-else-if="services.length"
       class="catalog"
     >
       <li
@@ -24,6 +34,8 @@
         </div>
       </li>
     </ul>
+
+    <!-- No Services Message -->
     <div
       v-else
       data-testid="no-results"
@@ -34,21 +46,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import useServices from '@/composables/useServices'
+import { defineComponent, onMounted, ref, computed } from 'vue'
+import { useServiceStore } from '@/stores/services'
 
 export default defineComponent({
   name: 'ServiceCatalog',
   setup() {
-    // Import services from the composable
-    const { services, loading } = useServices()
-
-    // Set the search string to a Vue ref
+    // Access the service store
+    const serviceStore = useServiceStore()
+    // Fetch services from the store when the component is mounted
+    onMounted(async () => {
+      await serviceStore.fetchServices() // Call the action to fetch services
+    })
     const searchQuery = ref('')
-
+    // Using computed to ensure reactivity
+    const services = computed(() => serviceStore.services)
+    const loading = computed(() => serviceStore.loading)
     return {
-      services,
-      loading,
+      services, // Use services from the store
+      loading, // Use loading state from the store
       searchQuery,
     }
   },
@@ -88,5 +104,10 @@ export default defineComponent({
 
 input {
   padding: 8px 4px;
+}
+
+.loading {
+  color: #666;
+  font-size: 1.2rem;
 }
 </style>
