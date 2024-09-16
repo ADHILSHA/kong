@@ -1,0 +1,98 @@
+@import './variables.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: "Inter", sans-serif;
+  }
+  html{
+    font-size: 1rem; /* 16px */
+    font-weight: 400;
+  }
+  .btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px 20px;
+  }
+  
+  button:hover {
+    background-color: var(--secondary-color);
+  }
+  .btn-secondary {
+    background-color: var(--secondary-color);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px 20px;
+  }
+
+  /* styles for text */
+  .text-primary{
+    color:var(--text-primary)
+  }
+  .text-secondary{
+    color:var(--text-secondary)
+  }
+  .text-link{
+    color:var(--text-link)
+  }
+  .text-1{
+        font-size: 1.25rem;
+  }
+  .text-lg{
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+}
+.text-xl{
+  font-size: 2rem;
+  line-height: 2.25rem;
+}
+.text-xs{
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.text-sm{
+  font-size: 0.8125rem; /* Converted from 13px */
+  line-height: 1.25rem; /* Converted from 20px */
+}
+.text-md{
+  font-size: 1rem; /* Converted from 16px */
+  line-height: 1.5rem; /* Converted from 24px */
+}
+
+.font-normal{
+  font-weight:400
+}
+.font-semibold{
+  font-weight: 600;
+}
+.font-bold{
+  font-weight:700;
+}
+.mt-11 {
+  margin-top: 0.6875rem; /* 11px converted to rem */
+}
+.flex{
+  display:flex;
+}
+.justify-center{
+  justify-content: center;
+}
+.align-center{
+  align-items: center;
+}
+.justify-between{
+  justify-content: space-between;
+}
+
+.gap-1{
+  gap: 0.25rem;
+}
+.min-w-0{
+  min-width: 0;
+}
+.no-wrap{
+  white-space: nowrap;
+}

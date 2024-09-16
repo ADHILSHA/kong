@@ -1,25 +1,31 @@
 <template>
   <header>
-    <div class="nav">
+    <!-- <div class="nav">
       <router-link to="/">
         Home
       </router-link>
-    </div>
+    </div> -->
+    <NavBar />
   </header>
-  <main>
+  <main class="main-content">
     <router-view />
   </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import NavBar from '@/components/NavBar.vue'
+import '@/assets/styles/global.css'
 
 export default defineComponent({
   name: 'App',
+  components: {
+    NavBar,
+  },
 })
 </script>
 
-<style lang="scss" scoped>
+<!-- <style lang="scss" scoped>
 .nav {
   border-bottom: 1px solid #333;
   margin-bottom: 4rem;
@@ -34,7 +40,7 @@ export default defineComponent({
     }
   }
 }
-</style>
+</style> -->
 
 <style lang="scss">
 // Unscoped styles for html and body
@@ -45,10 +51,15 @@ html {
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1.6rem;
   font-weight: 400;
   line-height: 1.2;
   margin: 0 auto;
+}
+
+.main-content {
+  margin-top: 70px;
+  /*the height of header*/
 }
 </style>

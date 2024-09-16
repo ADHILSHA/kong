@@ -1,12 +1,14 @@
 <template>
   <div class="service-catalog">
-    <h1>Service Catalog</h1>
-    <input
+    <h1 class="text-xl font-bold text-primary">
+      Service Hub
+    </h1>
+    <!-- <input
       v-model="searchQuery"
       class="search-input"
       data-testid="search-input"
       placeholder="Search services"
-    >
+    > -->
 
     <!-- Loading Indicator -->
     <div
@@ -17,23 +19,24 @@
     </div>
 
     <!-- Service List -->
-    <ul
+    <div
       v-else-if="services.length"
-      class="catalog"
+      class="service-container"
     >
-      <li
+      <ServiceCard
         v-for="service in services"
         :key="service.id"
-        class="service"
-      >
-        <div>
+        :service="service"
+      />
+      <!-- <ServiceCard :service="service"/> -->
+      <!-- <div>
           <p>
             {{ service.name }}
           </p>
           <p>{{ service.description }}</p>
-        </div>
-      </li>
-    </ul>
+        </div> -->
+      <!-- </div> -->
+    </div>
 
     <!-- No Services Message -->
     <div
@@ -48,9 +51,12 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, computed } from 'vue'
 import { useServiceStore } from '@/stores/services'
-
+import ServiceCard from './ServiceCard.vue'
 export default defineComponent({
   name: 'ServiceCatalog',
+  components:{
+    ServiceCard,
+  },
   setup() {
     // Access the service store
     const serviceStore = useServiceStore()
@@ -73,9 +79,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .service-catalog {
-  margin: 2rem auto;
-  max-width: 1366px;
   padding: 0 20px;
+
 }
 
 .catalog {
@@ -86,8 +91,9 @@ export default defineComponent({
 }
 
 .service {
-  border: 1px solid #999;
-  border-radius: 10px;
+  // border: 1px solid #999;
+  background: #FFFFFF;
+  border-radius: 40px;
   margin: 6px;
   padding: 8px 16px;
   width: 200px;
@@ -110,4 +116,28 @@ input {
   color: #666;
   font-size: 1.2rem;
 }
+
+.service-container {
+  display: grid;
+  gap: 2.5rem; /* Space between cards */
+  grid-template-columns: repeat(3, 1fr); /* 3 columns by default */
+  grid-template-rows: auto;  /* Allow rows to adjust based on content */
+  // padding: 16px;
+
+}
+
+
+
+@media (max-width: 1024px) {
+  .service-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .service-container {
+    grid-template-columns: 1fr; /* 1 column on small screens */
+  }
+}
+
 </style>

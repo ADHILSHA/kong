@@ -1,0 +1,12 @@
+:root {
+    --primary-color: #5888DB;
+    --secondary-color: #07A88D;
+    --text-primary: #3C4557;
+    --text-secondary:#707888;
+    --text-link:#1456CB;
+    --background-color:#F8F8FA;
+    --text-success:#42D782;
+    --background-secondary:#F2F6FE;
+    font-size: 16px; /* 1rem = 16px */
+  }
+  
