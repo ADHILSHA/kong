@@ -1,41 +1,75 @@
 <template>
-    <div class="input-wrapper w-full">
-  <!-- <div class="icon"> -->
-    <img src="/assets/icons/search.svg" alt="icon" class="icon">
-  <!-- </div> -->
-  <input type="text" placeholder="Search" class="custom-input">
-</div>
-
+  <div class="input-wrapper w-full">
+    <!-- <div class="icon"> -->
+    <img
+      alt="icon"
+      class="icon"
+      src="/assets/icons/search.svg"
+    >
+    <!-- </div> -->
+    <input
+      v-model="inputValue"
+      class="custom-input"
+      placeholder="Search"
+      type="text"
+      @input="updateValue"
+    >
+  </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent ,ref,watch } from 'vue'
 export default defineComponent({
-    name:"SearchBar"
+  name:'SearchBar',
+  props: {
+    modelValue: {
+      type: String,
+      default: '',
+    },
+  },
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    const inputValue = ref(props.modelValue)
+
+    // Watch the modelValue prop to keep internalValue in sync
+    watch(() => props.modelValue, (newValue) => {
+      inputValue.value = newValue
+    })
+
+    // Emit the new value when input changes
+    const updateValue = () => {
+      emit('update:modelValue', inputValue.value)
+    }
+
+    return {
+      inputValue,
+      updateValue,
+    }
+  },
 })
 </script>
 <style>
 .input-wrapper {
-  position: relative; /* Position relative to contain the icon */
-  display: flex;
-  border:1px solid #E7E7EC;
-  background: #fff;
-  border-radius:4px;
-  padding:0.625rem 0rem;
-  height: fit-content;
   align-items: center;
+  background: #fff;
+  border:1px solid #E7E7EC;
+  border-radius:4px;
+  display: flex;
+  height: fit-content;
+  padding:0.25rem 0rem;
+  position: relative; /* Position relative to contain the icon */
 }
 .input-wrapper .icon{
     height: 1rem;
- width:1rem;
- pointer-events: none;
  padding-left:10px;
-} 
+ pointer-events: none;
+ width:1rem;
+}
 .input-wrapper input {
-  padding-left: 8px; /* Add padding to make space for the icon */
+  border: none;
   height: 2rem; /* Adjust input height if needed */
   /* border-color: #E7E7EC; */
   outline: none;
-  border: none;
+  padding-left: 8px; /* Add padding to make space for the icon */
   width: 100%;
 }
 .custom-input:focus {

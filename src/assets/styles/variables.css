@@ -7,6 +7,9 @@
     --background-color:#F8F8FA;
     --text-success:#42D782;
     --background-secondary:#F2F6FE;
+    --text-sub:#8A8A8A;
+    --text-active:#1155CB;
+    --text-headings:#0B172D;
     font-size: 16px; /* 1rem = 16px */
   }
   

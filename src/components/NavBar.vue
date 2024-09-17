@@ -1,42 +1,48 @@
 <template>
-    <div class="nav-container">
-        <div>
-            <img src="/assets/logo/logo.svg">
-        </div>
-        <div class="menu-wrapper">
-            <div class="nav-link">
-                <img class="nav-icon" src="/assets/icons/organisation.svg">
-                <div>Organisation</div>
-            </div>
-            <div class="nav-link">
-                <img class="nav-icon" src="/assets/icons/settings.svg">
-                <div>Settings</div>
-            </div>
-            <div class="nav-link nav-active">
-                <!-- <img src="/assets/icons/icon-1.svg" class="nav-icon"/> -->
-                <user-avatar class="avatar" />
-                <div>Catherine</div>
-            </div>
-            <!-- <div class="nav-link">
+  <div class="nav-container">
+    <div>
+      <img src="/assets/logo/logo.svg">
+    </div>
+    <div class="menu-wrapper">
+      <div class="nav-link">
+        <img
+          class="nav-icon"
+          src="/assets/icons/organisation.svg"
+        >
+        <div>Organisation</div>
+      </div>
+      <div class="nav-link">
+        <img
+          class="nav-icon"
+          src="/assets/icons/settings.svg"
+        >
+        <div>Settings</div>
+      </div>
+      <div class="nav-link nav-active">
+        <!-- <img src="/assets/icons/icon-1.svg" class="nav-icon"/> -->
+        <user-avatar class="avatar" />
+        <div>Catherine</div>
+      </div>
+      <!-- <div class="nav-link">
                     Settings
                 </div>
                 <div class="nav-link nav-active">
                     Catherine
                 </div> -->
-        </div>
     </div>
+  </div>
 </template>
 <script land="ts">
 import { defineComponent } from 'vue'
 import UserAvatar from './UserAvatar.vue'
 export default defineComponent({
-    name: 'NavBar',
-    components: {
-        UserAvatar,
-    },
-    setup() {
+  name: 'NavBar',
+  components: {
+    UserAvatar,
+  },
+  setup() {
 
-    },
+  },
 
 })
 </script>

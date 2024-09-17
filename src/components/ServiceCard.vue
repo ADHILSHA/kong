@@ -17,33 +17,36 @@
     </div>
     <div class="flex align-end justify-between flex-auto-dir">
       <div>
-      <ul
-        v-if="service?.configured"
-        class="card-content-list text-xs text-secondary font-semibold"
-      >
-        <li>
-          <span class="text-primary font-semibold">{{ service?.metrics?.latency||0 }}</span> latency
-        </li>
-        <li>
-          <span class="text-primary font-semibold"> {{ service?.metrics?.uptime||0 }} </span> uptime
-        </li>
-        <li>
-          <span class="text-primary font-semibold"> {{ service?.metrics?.requests||0 }}</span> requests
-          <span class="text-primary font-semibold dot-before">  {{ service?.metrics?.errors||0 }}%</span>
-          errors
-        </li>
-      </ul>
-      <ul
-        v-else
-        class="text-secondary font-semibold text-xs not-configured-msg"
-      >
-        <li>
-          Not Configured with runtime yet
-        </li>
-      </ul>
-    </div>
-    <div>
-      <multi-user-avatar :users="developers" v-if="developers"/>
+        <ul
+          v-if="service?.configured"
+          class="card-content-list text-xs text-secondary font-semibold"
+        >
+          <li>
+            <span class="text-primary font-semibold">{{ service?.metrics?.latency||0 }}</span> latency
+          </li>
+          <li>
+            <span class="text-primary font-semibold"> {{ service?.metrics?.uptime||0 }} </span> uptime
+          </li>
+          <li>
+            <span class="text-primary font-semibold"> {{ service?.metrics?.requests||0 }}</span> requests
+            <span class="text-primary font-semibold dot-before">  {{ service?.metrics?.errors||0 }}%</span>
+            errors
+          </li>
+        </ul>
+        <ul
+          v-else
+          class="text-secondary font-semibold text-xs not-configured-msg"
+        >
+          <li>
+            Not Configured with runtime yet
+          </li>
+        </ul>
+      </div>
+      <div>
+        <multi-user-avatar
+          v-if="developers"
+          :users="developers"
+        />
       </div>
     </div>
   </div>
@@ -56,7 +59,7 @@ import StatusLabel from './StatusLabel.vue'
 import LabelChip from './LabelChip.vue'
 
 import MultiUserAvatar from './MultiUserAvatar.vue'
-import {useDevelopers} from '../composables/useDevelopers'
+import { useDevelopers } from '../composables/useDevelopers'
 
 
 
@@ -66,7 +69,7 @@ export default defineComponent({
   components:{
     StatusLabel,
     LabelChip,
-    MultiUserAvatar
+    MultiUserAvatar,
   },
   props:{
     service:{
@@ -76,10 +79,10 @@ export default defineComponent({
   },
   setup(props) {
     const statusValue = computed(() => props.service?.configured?props.service.published?'published':'un_published':'in_progress' )
-    const { developers } = useDevelopers(props.service?.versions);
+    const { developers } = useDevelopers(props.service?.versions)
     return {
       statusValue,
-      developers
+      developers,
     }
   },
 })
@@ -94,6 +97,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  max-height:232px;
   padding: 1.25rem;
 
 }

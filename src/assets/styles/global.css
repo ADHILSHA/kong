@@ -35,6 +35,9 @@ body {
   .text-secondary{
     color:var(--text-secondary)
   }
+  .text-subtext{
+    color:var(--text-sub)
+  }
   .text-link{
     color:var(--text-link)
   }
@@ -129,6 +132,18 @@ a{
 }
 .flex-auto-dir{
   flex-direction: row;
+}
+.text-right {
+  text-align: right;
+}
+.justify-end{
+  justify-content: end;
+}
+.text-active{
+  color:var(--text-active);
+}
+.text-headings{
+  color:var(--text-headings);
 }
 @media (max-width: 768px) {
   .flex-item {

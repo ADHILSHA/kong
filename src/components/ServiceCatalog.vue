@@ -10,20 +10,26 @@
       placeholder="Search services"
     > -->
     <div class="header-container">
-     <PageHeader title="Service Hub">
-      <div class="description text-md font-normal">
-      Organize services, manage and track versioning and API service documentation. 
-      
-      <a href="#">Learn more</a>
-      </div>
+      <PageHeader title="Service Hub">
+        <div class="description text-md font-normal">
+          Organize services, manage and track versioning and API service documentation.
+
+          <a href="#">Learn more</a>
+        </div>
       </PageHeader>
       <div class="flex flex-auto-dir">
-        <SearchBar class="search-bar flex-grow"/>
-        <div class="flex-item btn-container">
-        <CustomButton title="Service Package" icon="/assets/icons/plus.svg" />
+        <SearchBar
+          v-model="searchQuery"
+          class="search-bar flex-grow"
+        />
+        <div class="btn-container">
+          <CustomButton
+            icon="/assets/icons/plus.svg"
+            title="Service Package"
+          />
+        </div>
       </div>
-      </div>
-    </div> 
+    </div>
     <!-- Loading Indicator -->
     <div
       v-if="loading"
@@ -40,7 +46,9 @@
       <ServiceCard
         v-for="service in services"
         :key="service.id"
+        class="cursor-pointer"
         :service="service"
+        @click="handleOpenPopup(service)"
       />
       <!-- <ServiceCard :service="service"/> -->
       <!-- <div>
@@ -59,16 +67,26 @@
     >
       No services
     </div>
+    <CustomModal v-model="openPopup">
+      <ServiceDetails
+        v-if="currentService?.versions?.length"
+        :service="currentService"
+      />
+    </CustomModal>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, computed } from 'vue'
+import { defineComponent, ref, computed,watch } from 'vue'
 import { useServiceStore } from '@/stores/services'
 import ServiceCard from './ServiceCard.vue'
 import PageHeader from './PageHeader.vue'
 import SearchBar from './SearchBar.vue'
 import CustomButton from './CustomButton.vue'
+import { useDebounce } from '@/composables/useDebounce'
+import CustomModal from './CustomModal.vue'
+import ServiceDetails from './ServiceDetails.vue'
+import type { Service } from '@/types/Service'
 
 export default defineComponent({
   name: 'ServiceCatalog',
@@ -76,16 +94,32 @@ export default defineComponent({
     ServiceCard,
     PageHeader,
     SearchBar,
-    CustomButton 
+    CustomButton,
+    CustomModal,
+    ServiceDetails,
   },
   setup() {
     // Access the service store
     const serviceStore = useServiceStore()
+    const openPopup=ref(false)
+    const currentService=ref<Service>()
+
     // Fetch services from the store when the component is mounted
-    onMounted(async () => {
-      await serviceStore.fetchServices() // Call the action to fetch services
-    })
-    const searchQuery = ref('')
+    const searchQuery = ref()
+    const debouncedFetchServices = useDebounce(async (query: string) => {
+      await serviceStore.fetchServices(query?{ q: query }:{})
+    }, 500)
+
+    // Watch the searchQuery for changes and fetch data accordingly
+    watch(searchQuery, async (newQuery) => {
+      debouncedFetchServices(newQuery)
+    }, { immediate: true }) // Trigger fetch on component mount
+    const handleOpenPopup=(ser:Service)=>{
+      if (ser.versions?.length) {
+        currentService.value=ser
+        openPopup.value=true
+      }
+    }
     // Using computed to ensure reactivity
     const services = computed(() => serviceStore.services)
     const loading = computed(() => serviceStore.loading)
@@ -93,6 +127,9 @@ export default defineComponent({
       services, // Use services from the store
       loading, // Use loading state from the store
       searchQuery,
+      openPopup,
+      currentService,
+      handleOpenPopup,
     }
   },
 })
@@ -105,8 +142,8 @@ export default defineComponent({
 }
 .header-container{
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Define three columns */
   gap: 4.5rem; /* Add gap between columns if needed */
+  grid-template-columns: 2fr 1fr; /* Define three columns */
   padding-top: 1.5rem;
 }
 
@@ -154,6 +191,7 @@ input {
 
 }
 .btn-container{
+  height: fit-content;
   padding-left: 1.5rem;
 }
 
@@ -164,7 +202,7 @@ input {
     grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
   }
   .header-container {
-  grid-template-columns: 1fr; 
+  grid-template-columns: 1fr;
   }
 }
 
@@ -173,9 +211,10 @@ input {
     grid-template-columns: 1fr; /* 1 column on small screens */
   }
   .header-container {
-  grid-template-columns: 1fr; 
+  grid-template-columns: 1fr;
   }
   .btn-container{
+
   padding-left: 0px;
   padding-top:1.5rem;
 }

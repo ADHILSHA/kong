@@ -1,33 +1,31 @@
 <template>
-<div class="text-primary">  
-<div class="text-xl font-bold heading">
-   {{ title }}
-
-</div>
-<div>
-<slot></slot>
-</div>
-</div>
-
+  <div class="text-primary">
+    <div class="text-xl font-bold heading">
+      {{ title }}
+    </div>
+    <div>
+      <slot />
+    </div>
+  </div>
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 export default defineComponent({
-    name:"pageHeader",
-    props:{
-        title:{
-            type:String,
-            required:true
-        },
-        description:{
-            type:String,
-            default:""
-        }
+  name:'PageHeader',
+  props:{
+    title:{
+      type:String,
+      required:true,
     },
-    setup(){
-        
-    }
-    
+    description:{
+      type:String,
+      default:'',
+    },
+  },
+  setup() {
+
+  },
+
 })
 </script>
 <style scope>
