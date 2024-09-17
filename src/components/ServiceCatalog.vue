@@ -1,15 +1,29 @@
 <template>
   <div class="service-catalog">
-    <h1 class="text-xl font-bold text-primary">
+    <!-- <h1 class="text-xl font-bold text-primary">
       Service Hub
-    </h1>
+    </h1> -->
     <!-- <input
       v-model="searchQuery"
       class="search-input"
       data-testid="search-input"
       placeholder="Search services"
     > -->
-
+    <div class="header-container">
+     <PageHeader title="Service Hub">
+      <div class="description text-md font-normal">
+      Organize services, manage and track versioning and API service documentation. 
+      
+      <a href="#">Learn more</a>
+      </div>
+      </PageHeader>
+      <div class="flex flex-auto-dir">
+        <SearchBar class="search-bar flex-grow"/>
+        <div class="flex-item btn-container">
+        <CustomButton title="Service Package" icon="/assets/icons/plus.svg" />
+      </div>
+      </div>
+    </div> 
     <!-- Loading Indicator -->
     <div
       v-if="loading"
@@ -52,10 +66,17 @@
 import { defineComponent, onMounted, ref, computed } from 'vue'
 import { useServiceStore } from '@/stores/services'
 import ServiceCard from './ServiceCard.vue'
+import PageHeader from './PageHeader.vue'
+import SearchBar from './SearchBar.vue'
+import CustomButton from './CustomButton.vue'
+
 export default defineComponent({
   name: 'ServiceCatalog',
   components:{
     ServiceCard,
+    PageHeader,
+    SearchBar,
+    CustomButton 
   },
   setup() {
     // Access the service store
@@ -81,6 +102,12 @@ export default defineComponent({
 .service-catalog {
   padding: 0 20px;
 
+}
+.header-container{
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Define three columns */
+  gap: 4.5rem; /* Add gap between columns if needed */
+  padding-top: 1.5rem;
 }
 
 .catalog {
@@ -122,8 +149,12 @@ input {
   gap: 2.5rem; /* Space between cards */
   grid-template-columns: repeat(3, 1fr); /* 3 columns by default */
   grid-template-rows: auto;  /* Allow rows to adjust based on content */
+  margin-top: 1.5rem;
   // padding: 16px;
 
+}
+.btn-container{
+  padding-left: 1.5rem;
 }
 
 
@@ -132,12 +163,22 @@ input {
   .service-container {
     grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
   }
+  .header-container {
+  grid-template-columns: 1fr; 
+  }
 }
 
 @media (max-width: 768px) {
   .service-container {
     grid-template-columns: 1fr; /* 1 column on small screens */
   }
+  .header-container {
+  grid-template-columns: 1fr; 
+  }
+  .btn-container{
+  padding-left: 0px;
+  padding-top:1.5rem;
+}
 }
 
 </style>

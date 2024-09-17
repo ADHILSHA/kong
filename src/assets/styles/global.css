@@ -93,9 +93,48 @@ body {
 .gap-1{
   gap: 0.25rem;
 }
+.gap-2{
+  gap: 0.5rem;
+}
+.gap-3{
+  gap: 0.75rem;
+}
+.gap-4{
+  gap: 1rem;
+}
+.gap-5{
+  gap: 1.25rem;
+}
 .min-w-0{
   min-width: 0;
 }
 .no-wrap{
   white-space: nowrap;
+}
+a{
+  color:var(--text-link);
+  text-decoration: none;
+}
+.w-full{
+  width: 100%;
+}
+.flex-1{
+  flex:1;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.flex-grow{
+  flex-grow: 1;
+}
+.flex-auto-dir{
+  flex-direction: row;
+}
+@media (max-width: 768px) {
+  .flex-item {
+    flex: 1 1 100%; /* On small screens, each item takes up the full width */
+  }
+  .flex-auto-dir{
+    flex-direction: column;
+  }
 }

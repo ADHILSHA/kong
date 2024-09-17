@@ -15,7 +15,7 @@
         {{ service.description }}
       </div>
     </div>
-    <div class="flex align-end justify-between">
+    <div class="flex align-end justify-between flex-auto-dir">
       <div>
       <ul
         v-if="service?.configured"
