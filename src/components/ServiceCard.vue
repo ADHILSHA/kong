@@ -15,7 +15,8 @@
         {{ service.description }}
       </div>
     </div>
-    <div>
+    <div class="flex align-end justify-between">
+      <div>
       <ul
         v-if="service?.configured"
         class="card-content-list text-xs text-secondary font-semibold"
@@ -41,6 +42,10 @@
         </li>
       </ul>
     </div>
+    <div>
+      <multi-user-avatar :users="developers" v-if="developers"/>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -50,6 +55,9 @@ import type { Service } from '@/types/Service'
 import StatusLabel from './StatusLabel.vue'
 import LabelChip from './LabelChip.vue'
 
+import MultiUserAvatar from './MultiUserAvatar.vue'
+import {useDevelopers} from '../composables/useDevelopers'
+
 
 
 
@@ -58,6 +66,7 @@ export default defineComponent({
   components:{
     StatusLabel,
     LabelChip,
+    MultiUserAvatar
   },
   props:{
     service:{
@@ -67,8 +76,10 @@ export default defineComponent({
   },
   setup(props) {
     const statusValue = computed(() => props.service?.configured?props.service.published?'published':'un_published':'in_progress' )
+    const { developers } = useDevelopers(props.service?.versions);
     return {
       statusValue,
+      developers
     }
   },
 })

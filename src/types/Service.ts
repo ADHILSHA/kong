@@ -13,10 +13,17 @@ export interface Version {
   name:string;
   description:string;
   updated_at:string;
+  developer:User;
 }
-interface Metrics {
+export interface Metrics {
   latency: number;
   uptime: number;
   requests: number;
   errors: number;
+}
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
 }
