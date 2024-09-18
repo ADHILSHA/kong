@@ -97,8 +97,8 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-height:232px;
   padding: 1.25rem;
+  max-height:232px;
 
 }
 .card-description{

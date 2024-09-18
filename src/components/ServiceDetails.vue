@@ -3,7 +3,7 @@
     <div class="text-md text-headings font-semibold">
       Versions {{ `(${service.versions?.length})` }}
     </div>
-    <div class="">
+    <div class="" v-if="service.versions?.length">
       <table>
         <tbody>
           <tr
@@ -51,6 +51,9 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <div v-else class="text-lg flex justify-center">
+        No Versions found
     </div>
   </div>
 </template>

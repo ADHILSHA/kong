@@ -83,6 +83,9 @@ body {
 .justify-center{
   justify-content: center;
 }
+.items-center{
+  align-items: center;
+}
 .align-center{
   align-items: center;
 }
@@ -144,6 +147,9 @@ a{
 }
 .text-headings{
   color:var(--text-headings);
+}
+.pointer-events-none{
+  pointer-events: none;
 }
 @media (max-width: 768px) {
   .flex-item {

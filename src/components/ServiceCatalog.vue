@@ -1,15 +1,6 @@
 <template>
   <div class="service-catalog">
-    <!-- <h1 class="text-xl font-bold text-primary">
-      Service Hub
-    </h1> -->
-    <!-- <input
-      v-model="searchQuery"
-      class="search-input"
-      data-testid="search-input"
-      placeholder="Search services"
-    > -->
-    <div class="header-container">
+    <div class="header-container" ref="dynamicHeader">
       <PageHeader title="Service Hub">
         <div class="description text-md font-normal">
           Organize services, manage and track versioning and API service documentation.
@@ -39,10 +30,15 @@
     </div>
 
     <!-- Service List -->
+     
     <div
       v-else-if="services.length"
-      class="service-container"
+      class="page-container"
+      :style="{ '--dynamic-height': dynamicHeight + 'px' }"
+     
     >
+    <div  class="service-container">
+    
       <ServiceCard
         v-for="service in services"
         :key="service.id"
@@ -50,15 +46,12 @@
         :service="service"
         @click="handleOpenPopup(service)"
       />
-      <!-- <ServiceCard :service="service"/> -->
-      <!-- <div>
-          <p>
-            {{ service.name }}
-          </p>
-          <p>{{ service.description }}</p>
-        </div> -->
-      <!-- </div> -->
+      </div>
+      <div class="flex justify-center">
+    <PaginationBar />
+  </div>
     </div>
+    
 
     <!-- No Services Message -->
     <div
@@ -67,9 +60,9 @@
     >
       No services
     </div>
+    
     <CustomModal v-model="openPopup">
       <ServiceDetails
-        v-if="currentService?.versions?.length"
         :service="currentService"
       />
     </CustomModal>
@@ -77,7 +70,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed,watch } from 'vue'
+import { defineComponent, ref, computed,watch,onMounted,nextTick,onUnmounted } from 'vue'
 import { useServiceStore } from '@/stores/services'
 import ServiceCard from './ServiceCard.vue'
 import PageHeader from './PageHeader.vue'
@@ -87,6 +80,7 @@ import { useDebounce } from '@/composables/useDebounce'
 import CustomModal from './CustomModal.vue'
 import ServiceDetails from './ServiceDetails.vue'
 import type { Service } from '@/types/Service'
+import PaginationBar from './PaginationBar.vue'
 
 export default defineComponent({
   name: 'ServiceCatalog',
@@ -97,12 +91,33 @@ export default defineComponent({
     CustomButton,
     CustomModal,
     ServiceDetails,
+    PaginationBar
   },
   setup() {
     // Access the service store
     const serviceStore = useServiceStore()
     const openPopup=ref(false)
     const currentService=ref<Service>()
+      const dynamicHeight = ref(0);
+      const dynamicHeader = ref<HTMLElement | null>(null);
+        const updateDynamicHeight = () => {
+      if (dynamicHeader.value) {
+        dynamicHeight.value = dynamicHeader.value.offsetHeight;
+        console.log("Updated height:", dynamicHeight.value);
+      } else {
+        console.warn("Dynamic header element is not yet available.");
+      }
+    };
+onMounted(() => {
+  updateDynamicHeight();
+  nextTick(() => {
+    window.addEventListener('resize', updateDynamicHeight);
+  });
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateDynamicHeight);
+});
 
     // Fetch services from the store when the component is mounted
     const searchQuery = ref()
@@ -115,20 +130,25 @@ export default defineComponent({
       debouncedFetchServices(newQuery)
     }, { immediate: true }) // Trigger fetch on component mount
     const handleOpenPopup=(ser:Service)=>{
-      if (ser.versions?.length) {
+     // if (ser.versions?.length) {
         currentService.value=ser
         openPopup.value=true
-      }
+     // }
     }
     // Using computed to ensure reactivity
-    const services = computed(() => serviceStore.services)
+    const services = computed(() => serviceStore.paginatedServices)
     const loading = computed(() => serviceStore.loading)
+   
+
+   
     return {
       services, // Use services from the store
       loading, // Use loading state from the store
       searchQuery,
       openPopup,
       currentService,
+      dynamicHeight,
+      dynamicHeader,
       handleOpenPopup,
     }
   },
@@ -136,6 +156,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.page-container{
+  height: calc(100vh - 60px - 1.5rem - var(--dynamic-height)); /* Remaining height below the header */
+  display: flex;
+  flex-direction: column;
+}
 .service-catalog {
   padding: 0 20px;
 
@@ -187,6 +212,8 @@ input {
   grid-template-columns: repeat(3, 1fr); /* 3 columns by default */
   grid-template-rows: auto;  /* Allow rows to adjust based on content */
   margin-top: 1.5rem;
+  flex: 1; /* Takes up remaining space above Div 2 */
+  overflow-y: auto; /* Makes it scrollable */
   // padding: 16px;
 
 }
@@ -212,12 +239,17 @@ input {
   }
   .header-container {
   grid-template-columns: 1fr;
+  gap:0.5rem;
   }
   .btn-container{
 
   padding-left: 0px;
   padding-top:1.5rem;
 }
+.page-container{
+  height:auto;
+}
+
 }
 
 </style>
