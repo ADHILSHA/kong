@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
-import { ref,computed } from 'vue'
+import { ref, computed } from 'vue'
 import axios from 'axios'
 import type { Service } from '@/types/Service'
 
 
-export const useServiceStore = defineStore('services',()=>{
+export const useServiceStore = defineStore('services', () => {
   const services = ref<Service[]>([])
   const loading = ref<boolean>(false)
   const error = ref<boolean>(false)
@@ -15,7 +15,7 @@ export const useServiceStore = defineStore('services',()=>{
     try {
       // Initialize loading state
       loading.value = true
-      currentPage.value=1
+      currentPage.value = 1
 
       // Create the query string from the queryParams object
       const queryString = new URLSearchParams(queryParams).toString()
@@ -36,13 +36,13 @@ export const useServiceStore = defineStore('services',()=>{
   const getServiceById = (id: string): Service | undefined => {
     return services.value.find(service => service.id === id)
   }
-// Mutation to set services
-const setServices = (newServices: Service[]) => {
-  services.value = newServices
-}
+  // Mutation to set services
+  const setServices = (newServices: Service[]) => {
+    services.value = newServices
+  }
   // Computed properties for pagination
   const totalPages = computed(() => Math.ceil(services.value.length / pageSize.value))
-  const totalServices = computed(() =>services.value.length)
+  const totalServices = computed(() => services.value.length)
 
   const paginatedServices = computed(() => {
     const start = (currentPage.value - 1) * pageSize.value
@@ -77,7 +77,7 @@ const setServices = (newServices: Service[]) => {
     setPageSize,
     totalServices,
     getServiceById,
-    setServices
+    setServices,
   }
 
 })

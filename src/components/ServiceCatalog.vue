@@ -66,7 +66,10 @@
       v-model="openPopup"
       @close="handleClosePopup"
     >
-      <ServiceDetails :service="currentService" v-if="currentService" />
+      <ServiceDetails
+        v-if="currentService"
+        :service="currentService"
+      />
     </CustomModal>
   </div>
 </template>
@@ -112,7 +115,11 @@ export default defineComponent({
     }
     const handleClosePopup = () => {
       openPopup.value = false
-      const { id, ...queryParams } = router.currentRoute.value.query
+      // Create a copy of the current query parameters
+      const queryParams = { ...router.currentRoute.value.query }
+      // Remove 'id' from the query parameters
+      delete queryParams.id
+      // Update the route with the modified query parameters
       router.push({ query: queryParams })
     }
     onMounted(() => {
@@ -234,19 +241,19 @@ input {
 }
 
 .service-container {
+  align-content: start;
   display: grid;
   flex: 1;
   gap: 2.5rem;
+  grid-auto-rows: min-content;
   /* Space between cards */
   grid-template-columns: repeat(3, 1fr);
   /* 3 columns by default */
   grid-template-rows: auto;
-  grid-auto-rows: min-content; 
   /* Allow rows to adjust based on content */
   margin-top: 1.5rem;
   /* Takes up remaining space above Div 2 */
   overflow-y: auto;
-  align-content: start;
   /* Makes it scrollable */
   // padding: 16px;
 

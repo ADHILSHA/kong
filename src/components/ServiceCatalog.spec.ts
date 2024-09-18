@@ -1,4 +1,4 @@
-import { vi, describe, it, expect } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { useServiceStore } from '@/stores/services'
@@ -10,7 +10,7 @@ import type { RouteRecordRaw } from 'vue-router'
 
 // Define routes for the mock router
 const routes: RouteRecordRaw[] = [
-  { path: '/', component: ServiceCatalog }
+  { path: '/', component: ServiceCatalog },
 ]
 
 const mockServices: Service[] = [
@@ -31,16 +31,16 @@ const mockServices: Service[] = [
           id: 'u1',
           name: 'Alice Johnson',
           email: 'alice.johnson@example.com',
-          avatar: 'https://example.com/avatars/alice.jpg'
-        }
-      }
+          avatar: 'https://example.com/avatars/alice.jpg',
+        },
+      },
     ],
     metrics: {
       latency: 120,
       uptime: 99.9,
       requests: 10000,
-      errors: 5
-    }
+      errors: 5,
+    },
   },
   {
     id: '2',
@@ -59,17 +59,17 @@ const mockServices: Service[] = [
           id: 'u2',
           name: 'Bob Smith',
           email: 'bob.smith@example.com',
-          avatar: 'https://example.com/avatars/bob.jpg'
-        }
-      }
+          avatar: 'https://example.com/avatars/bob.jpg',
+        },
+      },
     ],
     metrics: {
       latency: 150,
       uptime: 98.5,
       requests: 8000,
-      errors: 10
-    }
-  }
+      errors: 10,
+    },
+  },
 ]
 
 describe('ServiceCatalog.vue', () => {

@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import NavBar from './components/NavBar.vue';
+import NavBar from './components/NavBar.vue'
 import '@/assets/styles/global.css'
 
 export default defineComponent({
@@ -20,8 +20,8 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
-// Unscoped styles for html and body
+<style>
+/* Unscoped styles for html and body*/
 html {
   font-size: 16px;
   margin: 0;

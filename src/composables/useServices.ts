@@ -1,9 +1,6 @@
 import { ref, onBeforeMount } from 'vue'
 import axios from 'axios'
 
-// This composable is a simplified example for the exercise **and could likely be improved**.
-// Feel free to leave as-is, modify, or remove this file (and any others) as desired.
-// https://vuejs.org/guide/reusability/composables.html
 
 export default function useServices(): any {
   const services = ref<any[]>([])

@@ -1,22 +1,54 @@
 <template>
   <div class="nav-container">
     <div>
-      <img src="/assets/logo/logo.svg" alt="Logo">
+      <img
+        alt="Logo"
+        src="/assets/logo/logo.svg"
+      >
     </div>
     <div class="menu-wrapper">
-      <div class="menu-toggle" @click="toggleMenu">
-        <img src="/assets/icons/menu.svg" alt="Menu">
+      <div
+        class="menu-toggle"
+        @click="toggleMenu"
+      >
+        <img
+          alt="Menu"
+          src="/assets/icons/menu.svg"
+        >
       </div>
-      <div class="nav-menu" :class="isMenuOpen?'is-active':''">
-        <div class="nav-link cursor-pointer" :class="currentRoute === 'organisations' ? 'nav-active' : ''" @click="goToPage('/organisations')">
-          <img class="nav-icon" src="/assets/icons/organisation.svg" alt="Organisation">
+      <div
+        class="nav-menu"
+        :class="isMenuOpen ? 'is-active' : ''"
+      >
+        <div
+          class="nav-link cursor-pointer"
+          :class="currentRoute === 'organisations' ? 'nav-active' : ''"
+          @click="goToPage('/organisations')"
+        >
+          <img
+            alt="Organisation"
+            class="nav-icon"
+            src="/assets/icons/organisation.svg"
+          >
           <div>Organisation</div>
         </div>
-        <div class="nav-link cursor-pointer" :class="currentRoute === 'settings' ? 'nav-active' : ''" @click="goToPage('/settings')">
-          <img class="nav-icon" src="/assets/icons/settings.svg" alt="Settings">
+        <div
+          class="nav-link cursor-pointer"
+          :class="currentRoute === 'settings' ? 'nav-active' : ''"
+          @click="goToPage('/settings')"
+        >
+          <img
+            alt="Settings"
+            class="nav-icon"
+            src="/assets/icons/settings.svg"
+          >
           <div>Settings</div>
         </div>
-        <div class="nav-link cursor-pointer" :class="currentRoute === 'home' ? 'nav-active' : ''" @click="goToPage('/')">
+        <div
+          class="nav-link cursor-pointer"
+          :class="currentRoute === 'home' ? 'nav-active' : ''"
+          @click="goToPage('/')"
+        >
           <user-avatar class="avatar" />
           <div>Catherine</div>
         </div>
@@ -25,9 +57,9 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent,computed,ref } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import UserAvatar from './UserAvatar.vue'
-import { useRoute,useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 export default defineComponent({
   name: 'NavBar',
   components: {
@@ -35,24 +67,24 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute()
-    const router= useRouter()
-    const isMenuOpen = ref(false);
+    const router = useRouter()
+    const isMenuOpen = ref(false)
     // Check if a specific route parameter is present
-const currentRoute = computed(() => route.name)
-const goToPage=(path:string)=>{
-  router.push(path)
-}
-const toggleMenu = () => {
- 
+    const currentRoute = computed(() => route.name)
+    const goToPage = (path: string) => {
+      router.push(path)
+    }
+    const toggleMenu = () => {
+
       isMenuOpen.value = !isMenuOpen.value
-     
-    };
-return {
-  currentRoute,
-  goToPage,
-  toggleMenu,
-  isMenuOpen
-}
+
+    }
+    return {
+      currentRoute,
+      goToPage,
+      toggleMenu,
+      isMenuOpen,
+    }
   },
 
 })
@@ -71,14 +103,14 @@ return {
 }
 
 .menu-wrapper {
-  display: flex;
   align-items: center;
+  display: flex;
   height: 100%;
 }
 
 .menu-toggle {
-  display: none;
   cursor: pointer;
+  display: none;
   margin-right: 20px;
 }
 
@@ -111,27 +143,30 @@ return {
 .avatar {
   margin-right: 16px;
 }
-.menu-toggle img{
-  height:2rem;
-  width:2rem;
+
+.menu-toggle img {
+  height: 2rem;
+  width: 2rem;
 }
+
 /* Mobile styles */
 @media (max-width: 768px) {
   .menu-wrapper {
-    flex-direction: column;
     align-items: end;
-    width: 100%;
+    flex-direction: column;
     justify-content: center;
+    width: 100%;
   }
-  
+
   .nav-menu {
+    background: #073382;
     display: none;
     flex-direction: column;
-    width: 100%;
-    background: #073382;
-    position: absolute;
-    top: 70px; /* Adjust based on the height of your nav bar */
+    /* Adjust based on the height of your nav bar */
     left: 0;
+    position: absolute;
+    top: 70px;
+    width: 100%;
     z-index: 20;
   }
 
@@ -144,13 +179,12 @@ return {
   }
 
   .nav-link {
-    padding: 15px;
     border-bottom: 1px solid #ffffff;
+    padding: 15px;
   }
 
   .nav-link:last-child {
     border-bottom: none;
   }
 }
-
 </style>

@@ -97,7 +97,7 @@ export default defineComponent({
   justify-content: space-between;
   max-height: 232px;
   padding: 1.25rem;
- 
+
 
 }
 
@@ -169,9 +169,10 @@ export default defineComponent({
   transform: translateY(-50%);
   width: 0.5rem;
 }
+
 @media (max-width: 768px) {
-.card {
-  max-height:unset;
-}
+  .card {
+    max-height: unset;
+  }
 }
 </style>

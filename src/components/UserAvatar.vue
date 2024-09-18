@@ -68,16 +68,10 @@ export default defineComponent({
   background: #0A7FAE;
   border-radius: 30px;
   display: flex;
-  /* width: 30px; */
-  /* height: 2.25rem; */
-  /* height: 30px; */
   justify-content: center;
-  /* width: 2.25rem; */
 }
 
 .avatar-img {
   border-radius: 2.25rem;
-  /* height: 2.25rem;
-  width: 2.25rem; */
 }
 </style>
