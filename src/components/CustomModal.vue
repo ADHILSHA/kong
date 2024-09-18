@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref,watch } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'CustomModal',
@@ -21,7 +21,7 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'close'],
   setup(props, { emit }) {
     const isVisible = ref(props.modelValue)
 
@@ -33,6 +33,8 @@ export default defineComponent({
     const closePopup = () => {
       isVisible.value = false
       emit('update:modelValue', false)
+      emit('close')
+
     }
 
     return {
@@ -43,8 +45,8 @@ export default defineComponent({
 })
 </script>
 
-  <style scoped>
-  .popup-overlay {
+<style scoped>
+.popup-overlay {
     align-items: center;
     background: rgba(0, 0, 0, 0.5);
     bottom: 0;
@@ -55,9 +57,9 @@ export default defineComponent({
     right: 0;
     top: 0;
     z-index: 999;
-  }
+}
 
-  .popup-content {
+.popup-content {
     background: #fff;
     border-radius: 8px;
     max-height: 90%;
@@ -66,9 +68,9 @@ export default defineComponent({
     padding: 1rem;
     position: relative;
     width: 90%;
-  }
+}
 
-  .close-btn {
+.close-btn {
     background: none;
     border: none;
     cursor: pointer;
@@ -76,5 +78,5 @@ export default defineComponent({
     position: absolute;
     right: 0.5rem;
     top: 0.5rem;
-  }
-  </style>
+}
+</style>

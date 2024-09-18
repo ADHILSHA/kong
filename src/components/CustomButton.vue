@@ -13,32 +13,32 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({
-  name:'CustomButton',
-  props:{
-    title:{
-      type:String,
-      required:true,
+  name: 'CustomButton',
+  props: {
+    title: {
+      type: String,
+      required: true,
     },
-    icon:{
-      type:String,
-      required:false,
-      default:'',
+    icon: {
+      type: String,
+      required: false,
+      default: '',
     },
   },
 })
 </script>
 
 <style scoped>
-.btn-icon{
-    height:1.25rem;
-    width:1.25rem;
+.btn-icon {
+    height: 1.25rem;
+    width: 1.25rem;
 }
-.button-container{
+
+.button-container {
     background: var(--secondary-color);
     border-radius: 2rem;
     color: #fff;
     padding: 0.625rem 1.5rem;
     width: max-content;
 }
-
 </style>

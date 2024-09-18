@@ -17,11 +17,11 @@ import { defineComponent } from 'vue'
 import { statuses } from '@/utils/static/status'
 
 export default defineComponent({
-  name:'StatusLabel',
-  props:{
-    status:{
-      type:String,
-      required:true,
+  name: 'StatusLabel',
+  props: {
+    status: {
+      type: String,
+      required: true,
     },
   },
   setup(props) {
@@ -34,8 +34,8 @@ export default defineComponent({
 })
 </script>
 <style>
-.status-icon{
-    height:20px;
-    width:20px;
+.status-icon {
+  height: 20px;
+  width: 20px;
 }
 </style>

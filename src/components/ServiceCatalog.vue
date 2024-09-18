@@ -1,6 +1,9 @@
 <template>
   <div class="service-catalog">
-    <div class="header-container" ref="dynamicHeader">
+    <div
+      ref="dynamicHeader"
+      class="header-container"
+    >
       <PageHeader title="Service Hub">
         <div class="description text-md font-normal">
           Organize services, manage and track versioning and API service documentation.
@@ -30,28 +33,26 @@
     </div>
 
     <!-- Service List -->
-     
+
     <div
       v-else-if="services.length"
       class="page-container"
       :style="{ '--dynamic-height': dynamicHeight + 'px' }"
-     
     >
-    <div  class="service-container">
-    
-      <ServiceCard
-        v-for="service in services"
-        :key="service.id"
-        class="cursor-pointer"
-        :service="service"
-        @click="handleOpenPopup(service)"
-      />
+      <div class="service-container">
+        <ServiceCard
+          v-for="service in services"
+          :key="service.id"
+          class="cursor-pointer"
+          :service="service"
+          @click="handleOpenPopup(service)"
+        />
       </div>
       <div class="flex justify-center">
-    <PaginationBar />
-  </div>
+        <PaginationBar />
+      </div>
     </div>
-    
+
 
     <!-- No Services Message -->
     <div
@@ -60,17 +61,18 @@
     >
       No services
     </div>
-    
-    <CustomModal v-model="openPopup">
-      <ServiceDetails
-        :service="currentService"
-      />
+
+    <CustomModal
+      v-model="openPopup"
+      @close="handleClosePopup"
+    >
+      <ServiceDetails :service="currentService" />
     </CustomModal>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed,watch,onMounted,nextTick,onUnmounted } from 'vue'
+import { defineComponent, ref, computed, watch, onMounted, nextTick, onUnmounted } from 'vue'
 import { useServiceStore } from '@/stores/services'
 import ServiceCard from './ServiceCard.vue'
 import PageHeader from './PageHeader.vue'
@@ -81,66 +83,87 @@ import CustomModal from './CustomModal.vue'
 import ServiceDetails from './ServiceDetails.vue'
 import type { Service } from '@/types/Service'
 import PaginationBar from './PaginationBar.vue'
+import { useRouter } from 'vue-router'
+
 
 export default defineComponent({
   name: 'ServiceCatalog',
-  components:{
+  components: {
     ServiceCard,
     PageHeader,
     SearchBar,
     CustomButton,
     CustomModal,
     ServiceDetails,
-    PaginationBar
+    PaginationBar,
   },
   setup() {
+    const router = useRouter()
     // Access the service store
     const serviceStore = useServiceStore()
-    const openPopup=ref(false)
-    const currentService=ref<Service>()
-      const dynamicHeight = ref(0);
-      const dynamicHeader = ref<HTMLElement | null>(null);
-        const updateDynamicHeight = () => {
+    const openPopup = ref(false)
+    const currentService = ref<Service>()
+    const dynamicHeight = ref(0)
+    const dynamicHeader = ref<HTMLElement | null>(null)
+    const updateDynamicHeight = () => {
       if (dynamicHeader.value) {
-        dynamicHeight.value = dynamicHeader.value.offsetHeight;
-        console.log("Updated height:", dynamicHeight.value);
-      } else {
-        console.warn("Dynamic header element is not yet available.");
+        dynamicHeight.value = dynamicHeader.value.offsetHeight
       }
-    };
-onMounted(() => {
-  updateDynamicHeight();
-  nextTick(() => {
-    window.addEventListener('resize', updateDynamicHeight);
-  });
-});
+    }
+    const handleClosePopup = () => {
+      openPopup.value = false
+      const { id, ...queryParams } = router.currentRoute.value.query
+      router.push({ query: queryParams })
+    }
+    onMounted(() => {
+      updateDynamicHeight()
+      nextTick(() => {
+        window.addEventListener('resize', updateDynamicHeight)
+      })
+    })
 
-onUnmounted(() => {
-  window.removeEventListener('resize', updateDynamicHeight);
-});
 
+    onUnmounted(() => {
+      window.removeEventListener('resize', updateDynamicHeight)
+    })
     // Fetch services from the store when the component is mounted
     const searchQuery = ref()
     const debouncedFetchServices = useDebounce(async (query: string) => {
-      await serviceStore.fetchServices(query?{ q: query }:{})
+      await serviceStore.fetchServices(query ? { q: query } : {})
     }, 500)
+
+
 
     // Watch the searchQuery for changes and fetch data accordingly
     watch(searchQuery, async (newQuery) => {
       debouncedFetchServices(newQuery)
     }, { immediate: true }) // Trigger fetch on component mount
-    const handleOpenPopup=(ser:Service)=>{
-     // if (ser.versions?.length) {
-        currentService.value=ser
-        openPopup.value=true
-     // }
+    const handleOpenPopup = (ser: Service) => {
+      // if (ser.versions?.length) {
+      currentService.value = ser
+      openPopup.value = true
+      // Set the query parameter
+      router.push({ query: { ...router.currentRoute.value.query, id: ser.id } })
+      // }
     }
     // Using computed to ensure reactivity
     const services = computed(() => serviceStore.paginatedServices)
     const loading = computed(() => serviceStore.loading)
-   
 
-   
+    // Watch for changes in services and serviceId
+    const serviceId = computed(() => router.currentRoute.value.query.id as string)
+    watch([computed(() => serviceStore.services), serviceId], ([services, id]) => {
+      if (services.length && id) {
+        const matchedService = services.find(service => service.id === id)
+        if (matchedService) {
+          currentService.value = matchedService
+          openPopup.value = true // Open the popup
+        }
+      }
+    })
+
+
+
     return {
       services, // Use services from the store
       loading, // Use loading state from the store
@@ -150,25 +173,31 @@ onUnmounted(() => {
       dynamicHeight,
       dynamicHeader,
       handleOpenPopup,
+      handleClosePopup,
     }
   },
 })
 </script>
 
 <style lang="scss" scoped>
-.page-container{
-  height: calc(100vh - 60px - 1.5rem - var(--dynamic-height)); /* Remaining height below the header */
+.page-container {
+  /* Remaining height below the header */
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 60px - 1.5rem - var(--dynamic-height));
 }
+
 .service-catalog {
   padding: 0 20px;
 
 }
-.header-container{
+
+.header-container {
   display: grid;
-  gap: 4.5rem; /* Add gap between columns if needed */
-  grid-template-columns: 2fr 1fr; /* Define three columns */
+  gap: 4.5rem;
+  /* Add gap between columns if needed */
+  grid-template-columns: 2fr 1fr;
+  /* Define three columns */
   padding-top: 1.5rem;
 }
 
@@ -208,16 +237,22 @@ input {
 
 .service-container {
   display: grid;
-  gap: 2.5rem; /* Space between cards */
-  grid-template-columns: repeat(3, 1fr); /* 3 columns by default */
-  grid-template-rows: auto;  /* Allow rows to adjust based on content */
+  flex: 1;
+  gap: 2.5rem;
+  /* Space between cards */
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 columns by default */
+  grid-template-rows: auto;
+  /* Allow rows to adjust based on content */
   margin-top: 1.5rem;
-  flex: 1; /* Takes up remaining space above Div 2 */
-  overflow-y: auto; /* Makes it scrollable */
+  /* Takes up remaining space above Div 2 */
+  overflow-y: auto;
+  /* Makes it scrollable */
   // padding: 16px;
 
 }
-.btn-container{
+
+.btn-container {
   height: fit-content;
   padding-left: 1.5rem;
 }
@@ -226,30 +261,35 @@ input {
 
 @media (max-width: 1024px) {
   .service-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 columns on medium screens */
   }
+
   .header-container {
-  grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
   .service-container {
-    grid-template-columns: 1fr; /* 1 column on small screens */
+    grid-template-columns: 1fr;
+    /* 1 column on small screens */
   }
+
   .header-container {
-  grid-template-columns: 1fr;
-  gap:0.5rem;
+    gap: 0.5rem;
+    grid-template-columns: 1fr;
   }
-  .btn-container{
 
-  padding-left: 0px;
-  padding-top:1.5rem;
-}
-.page-container{
-  height:auto;
-}
+  .btn-container {
+
+    padding-left: 0px;
+    padding-top: 1.5rem;
+  }
+
+  .page-container {
+    height: auto;
+  }
 
 }
-
 </style>

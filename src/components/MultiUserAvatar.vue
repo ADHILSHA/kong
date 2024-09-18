@@ -49,45 +49,51 @@ export default defineComponent({
 })
 </script>
 
-  <style scoped>
-  .avatar-wrapper {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    position: relative;
-  }
+<style scoped>
+.avatar-wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
 
-  /* Style for the avatars */
-  .avatar {
-    border-radius: 50%;
-    height: 2.25rem;
-    margin-left: -0.75rem;
-    width: 2.25rem;
-  }
+/* Style for the avatars */
+.avatar {
+  border-radius: 50%;
+  height: 2.25rem;
+  margin-left: -0.75rem;
+  width: 2.25rem;
+}
 
-  /* Ensure the counter is on top of the avatars */
-  .avatar-circle {
-    align-items: center;
-    background: #F1F1F8;
-    border: 1px solid #fff;
-    border-radius: 50%;
-    color: #777D8A;
-    display: flex;
-    font-size: 0.75rem;
-    height: 2.25rem;
-    justify-content: center;
-    left: 0; /* Position at the left */
-    position: absolute; /* Position the counter absolutely within the wrapper */
-    top: 0; /* Position at the top */
-    width: 2.25rem;
-    z-index: 3;
-  }
+/* Ensure the counter is on top of the avatars */
+.avatar-circle {
+  align-items: center;
+  background: #F1F1F8;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  color: #777D8A;
+  display: flex;
+  font-size: 0.75rem;
+  height: 2.25rem;
+  justify-content: center;
+  left: 0;
+  /* Position at the left */
+  position: absolute;
+  /* Position the counter absolutely within the wrapper */
+  top: 0;
+  /* Position at the top */
+  width: 2.25rem;
+  z-index: 3;
+}
 
-  /* Adjust the margin for the first avatar */
-  .avatar:first-child {
-    margin-left: 0; /* No margin for the first avatar */
-  }
-  .extra-count{
-    margin-left: -35px; /* No margin for the first avatar */
-  }
-  </style>
+/* Adjust the margin for the first avatar */
+.avatar:first-child {
+  margin-left: 0;
+  /* No margin for the first avatar */
+}
+
+.extra-count {
+  margin-left: -35px;
+  /* No margin for the first avatar */
+}
+</style>

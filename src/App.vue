@@ -25,27 +25,10 @@ export default defineComponent({
 })
 </script>
 
-<!-- <style lang="scss" scoped>
-.nav {
-  border-bottom: 1px solid #333;
-  margin-bottom: 4rem;
-  padding: 16px;
-
-  a {
-    color: blue;
-    font-weight: 700;
-
-    &.router-link-exact-active {
-      color: green;
-    }
-  }
-}
-</style> -->
-
 <style lang="scss">
 // Unscoped styles for html and body
 html {
-  font-size: 10px;
+  font-size: 16px;
   margin: 0;
   padding: 0;
 }

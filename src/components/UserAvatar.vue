@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref,computed } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 
 export default defineComponent({
   name: 'UserAvatar',
@@ -31,9 +31,9 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    size:{
-      type:Number,
-      default:2.25,
+    size: {
+      type: Number,
+      default: 2.25,
     },
   },
   setup(props) {
@@ -42,7 +42,7 @@ export default defineComponent({
     const hasError = ref(false)
 
     const handleImageError = () => {
-      hasError.value=true
+      hasError.value = true
     }
     // Computed property to generate inline styles for size
     const avatarStyles = computed(() => {

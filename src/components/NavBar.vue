@@ -19,16 +19,9 @@
         <div>Settings</div>
       </div>
       <div class="nav-link nav-active">
-        <!-- <img src="/assets/icons/icon-1.svg" class="nav-icon"/> -->
         <user-avatar class="avatar" />
         <div>Catherine</div>
       </div>
-      <!-- <div class="nav-link">
-                    Settings
-                </div>
-                <div class="nav-link nav-active">
-                    Catherine
-                </div> -->
     </div>
   </div>
 </template>
@@ -48,54 +41,54 @@ export default defineComponent({
 </script>
 <style lang="css" scoped>
 .nav-container {
-    align-items: center;
-    background: linear-gradient(180deg, #09224F 0%, #073382 100%);
-    display: flex;
-    height: 70px;
-    justify-content: space-between;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10
+  align-items: center;
+  background: linear-gradient(180deg, #09224F 0%, #073382 100%);
+  display: flex;
+  height: 70px;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10
 }
 
 .menu-wrapper {
-    align-items: center;
-    display: flex;
-    gap: 8px;
-    height: 100%;
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  height: 100%;
 
 }
 
 .nav-link {
-    align-items: center;
-    color: #ffffff;
-    display: flex;
-    font-size: 15px;
-    font-weight: 600;
-    height: 100%;
-    line-height: 70px;
-    opacity: 0.8;
-    padding: 0px 20px 0px 20px;
+  align-items: center;
+  color: #ffffff;
+  display: flex;
+  font-size: 15px;
+  font-weight: 600;
+  height: 100%;
+  line-height: 70px;
+  opacity: 0.8;
+  padding: 0px 20px 0px 20px;
 
 
 }
 
 .span {
-    display: inline-block;
-    line-height: 18.15px;
-    vertical-align: middle;
+  display: inline-block;
+  line-height: 18.15px;
+  vertical-align: middle;
 }
 
 .nav-active {
-    background: #072863;
+  background: #072863;
 }
 
 .nav-icon {
-    margin-right: 12px;
+  margin-right: 12px;
 }
 
 .avatar {
-    margin-right: 16px;
+  margin-right: 16px;
 }
 </style>

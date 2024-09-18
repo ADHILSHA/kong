@@ -1,9 +1,16 @@
 <template>
   <div>
+    <div class="text-lg text-headings font-semibold service-heading">
+      <!-- Not given in design but feels like its needed for referring to which service the user is looking at-->
+      {{ service?.name }}
+    </div>
     <div class="text-md text-headings font-semibold">
       Versions {{ `(${service.versions?.length})` }}
     </div>
-    <div class="" v-if="service.versions?.length">
+    <div
+      v-if="service.versions?.length"
+      class=""
+    >
       <table>
         <tbody>
           <tr
@@ -20,13 +27,13 @@
               <div>
                 <span
                   class="chip-label text-active"
-                  :class="service?.type=='HTTP'?'chip-label-active':'chip-label-inactive'"
+                  :class="service?.type == 'HTTP' ? 'chip-label-active' : 'chip-label-inactive'"
                 >
                   HTTP
                 </span>
                 <span
                   class="chip-label text-active"
-                  :class="service?.type=='REST'?'chip-label-active':'chip-label-inactive'"
+                  :class="service?.type == 'REST' ? 'chip-label-active' : 'chip-label-inactive'"
                 >
                   REST
                 </span>
@@ -40,7 +47,7 @@
                 />
                 <div class="developer-details">
                   <div class="text-sm font-semibold">
-                    {{ version.developer?.name||"Unknown User" }}
+                    {{ version.developer?.name || "Unknown User" }}
                   </div>
                   <div class="text-xs text-subtext">
                     {{ getTimeAgo(version.updated_at) }}
@@ -52,8 +59,11 @@
         </tbody>
       </table>
     </div>
-    <div v-else class="text-lg flex justify-center">
-        No Versions found
+    <div
+      v-else
+      class="text-lg flex justify-center"
+    >
+      No Versions found
     </div>
   </div>
 </template>
@@ -64,18 +74,18 @@ import type { PropType } from 'vue'
 import UserAvatar from './UserAvatar.vue'
 import { useTimeAgo } from '@/composables/useTimeAgo'
 export default defineComponent({
-  components:{
+  components: {
     UserAvatar,
   },
-  props:{
-    service:{
-      type:Object as PropType<Service>,
-      required:true,
+  props: {
+    service: {
+      type: Object as PropType<Service>,
+      required: true,
     },
   },
   setup() {
     const { timeAgo } = useTimeAgo()
-    const getTimeAgo=(date:string)=>{
+    const getTimeAgo = (date: string) => {
       return timeAgo(date)
     }
     return {
@@ -87,112 +97,133 @@ export default defineComponent({
 </script>
 <style scoped>
 .table-container {
-  overflow-x: auto;
-  width: 100%;
+    overflow-x: auto;
+    width: 100%;
 }
+
+.service-heading {
+    margin-bottom: 1rem;
+}
+
 
 /* Allow other columns to take more space */
 td:not(.developer-cell) {
-  overflow: hidden;
-  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Add ellipsis for overflow text */
 }
 
 table {
-  border-collapse: collapse;
-  table-layout: auto; /* Allow columns to adjust their width based on content */
-  width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    /* Allow columns to adjust their width based on content */
+    width: 100%;
 }
 
-th, td {
-  border-bottom: 1px solid #ddd;
-  padding: 12px;
-  text-align: left;
+th,
+td {
+    border-bottom: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
 }
+
 /* Remove border-bottom from the last tr in the table */
 tr:last-child td {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 th {
-  background-color: #f4f4f4;
+    background-color: #f4f4f4;
 }
 
 .developer {
-  align-items: start;
-  display: flex;
+    align-items: start;
+    display: flex;
 }
 
 .avatar {
-  border-radius: 50%;
-  height: 40px;
-  margin-right: 10px;
-  width: 40px;
+    border-radius: 50%;
+    height: 40px;
+    margin-right: 10px;
+    width: 40px;
 }
 
-.developer-details{
-    margin-left:4px;
+.developer-details {
+    margin-left: 4px;
 }
-.type-cell{
-    width:30%;
+
+.type-cell {
+    width: 30%;
 }
 
 /* Developer column should only take the necessary space */
 .developer-cell {
-  white-space: nowrap; /* Prevent line breaks */
+    white-space: nowrap;
+    /* Prevent line breaks */
 
 }
-.chip-label{
+
+.chip-label {
     border-radius: 0.25rem;
-    margin-left:0.25rem;
+    margin-left: 0.25rem;
 
-    padding:0.375rem;
+    padding: 0.375rem;
 }
-.chip-label-inactive{
+
+.chip-label-inactive {
     background: var(--background-color);
 }
-.chip-label-active{
+
+.chip-label-active {
     background: #BDD3F9;
 }
 
 @media (max-width: 768px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
-  }
 
-  thead tr {
-    left: -9999px;
-    position: absolute;
-    top: -9999px;
-  }
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
 
-  tr {
-    border: 1px solid #ccc;
-    display: flex;
-    flex-direction: column;
-    margin-bottom:
- 0.625rem;
-  }
+    thead tr {
+        left: -9999px;
+        position: absolute;
+        top: -9999px;
+    }
 
-  td {
-    border: none;
-    padding-left: 50%;
-    position: relative;
-    text-align: right;
-  }
+    tr {
+        border: 1px solid #ccc;
+        display: flex;
+        flex-direction: column;
+        margin-bottom:
+            0.625rem;
+    }
 
-  td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    left: 0;
-    padding-right: 10px;
-    position: absolute;
-    text-align: left;
-    white-space: nowrap;
-    width: 45%;
-  }
-  /* Remove border from the last td in each row */
-td:last-child {
-  border-bottom: none;
-}
+    td {
+        border: none;
+        padding-left: 50%;
+        position: relative;
+        text-align: right;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        left: 0;
+        padding-right: 10px;
+        position: absolute;
+        text-align: left;
+        white-space: nowrap;
+        width: 45%;
+    }
+
+    /* Remove border from the last td in each row */
+    td:last-child {
+        border-bottom: none;
+    }
 }
 </style>

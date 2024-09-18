@@ -32,11 +32,15 @@ export const useServiceStore = defineStore('services',()=>{
       loading.value = false
     }
   }
+  // Get service by ID
+  const getServiceById = (id: string): Service | undefined => {
+    return services.value.find(service => service.id === id)
+  }
 
   // Computed properties for pagination
   const totalPages = computed(() => Math.ceil(services.value.length / pageSize.value))
   const totalServices = computed(() =>services.value.length)
-  
+
   const paginatedServices = computed(() => {
     const start = (currentPage.value - 1) * pageSize.value
     const end = start + pageSize.value
@@ -68,7 +72,8 @@ export const useServiceStore = defineStore('services',()=>{
     paginatedServices,
     setPage,
     setPageSize,
-    totalServices
+    totalServices,
+    getServiceById,
   }
 
 })

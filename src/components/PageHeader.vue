@@ -11,15 +11,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({
-  name:'PageHeader',
-  props:{
-    title:{
-      type:String,
-      required:true,
+  name: 'PageHeader',
+  props: {
+    title: {
+      type: String,
+      required: true,
     },
-    description:{
-      type:String,
-      default:'',
+    description: {
+      type: String,
+      default: '',
     },
   },
   setup() {
@@ -29,7 +29,7 @@ export default defineComponent({
 })
 </script>
 <style scope>
-.heading{
-    margin-bottom:1rem;
+.heading {
+    margin-bottom: 1rem;
 }
 </style>

@@ -22,14 +22,14 @@
           class="card-content-list text-xs text-secondary font-semibold"
         >
           <li>
-            <span class="text-primary font-semibold">{{ service?.metrics?.latency||0 }}</span> latency
+            <span class="text-primary font-semibold">{{ service?.metrics?.latency || 0 }}</span> latency
           </li>
           <li>
-            <span class="text-primary font-semibold"> {{ service?.metrics?.uptime||0 }} </span> uptime
+            <span class="text-primary font-semibold"> {{ service?.metrics?.uptime || 0 }} </span> uptime
           </li>
           <li>
-            <span class="text-primary font-semibold"> {{ service?.metrics?.requests||0 }}</span> requests
-            <span class="text-primary font-semibold dot-before">  {{ service?.metrics?.errors||0 }}%</span>
+            <span class="text-primary font-semibold"> {{ service?.metrics?.requests || 0 }}</span> requests
+            <span class="text-primary font-semibold dot-before"> {{ service?.metrics?.errors || 0 }}%</span>
             errors
           </li>
         </ul>
@@ -52,7 +52,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent,computed } from 'vue'
+import { defineComponent, computed } from 'vue'
 import type { PropType } from 'vue'
 import type { Service } from '@/types/Service'
 import StatusLabel from './StatusLabel.vue'
@@ -66,19 +66,19 @@ import { useDevelopers } from '../composables/useDevelopers'
 
 export default defineComponent({
   name: 'ServiceCard',
-  components:{
+  components: {
     StatusLabel,
     LabelChip,
     MultiUserAvatar,
   },
-  props:{
-    service:{
-      type:Object as PropType<Service>,
-      required:true,
+  props: {
+    service: {
+      type: Object as PropType<Service>,
+      required: true,
     },
   },
   setup(props) {
-    const statusValue = computed(() => props.service?.configured?props.service.published?'published':'un_published':'in_progress' )
+    const statusValue = computed(() => props.service?.configured ? props.service.published ? 'published' : 'un_published' : 'in_progress')
     const { developers } = useDevelopers(props.service?.versions)
     return {
       statusValue,
@@ -89,31 +89,35 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-
-
-.card{
-    background: #FFFFFF;
+.card {
+  background: #FFFFFF;
   border-radius: 0.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  max-height: 232px;
   padding: 1.25rem;
-  max-height:232px;
 
 }
-.card-description{
+
+.card-description {
   margin-top: 0.6875rem;
 }
-.card-content-list{
+
+.card-content-list {
   margin-top: 2.3125;
-  padding-left:0rem;
+  padding-left: 0rem;
 }
-.card-content-list li{
-  list-style-type: none; /* Remove default list style */
-  margin-top:0.5rem;
-  padding-left: 1.5rem; /* Space for custom dot */
+
+.card-content-list li {
+  list-style-type: none;
+  /* Remove default list style */
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+  /* Space for custom dot */
   position: relative;
 }
+
 .card-content-list li::before {
   background-color: var(--text-success);
   border-radius: 50%;
@@ -125,25 +129,35 @@ export default defineComponent({
   transform: translateY(-50%);
   width: 8px;
 }
-.card-title{
-  margin-top:0.625rem;
-}
-.dot-before::before {
-    content: "•"; /* Unicode character for the bullet point */
 
-    font-size: 1em; /* Adjust size if needed */
-    margin: 0 0.25rem; /* Adjust spacing */
+.card-title {
+  margin-top: 0.625rem;
 }
-.not-configured-msg{
-  padding-left:0rem;
+
+.dot-before::before {
+  content: "•";
+  /* Unicode character for the bullet point */
+
+  font-size: 1em;
+  /* Adjust size if needed */
+  margin: 0 0.25rem;
+  /* Adjust spacing */
 }
-.not-configured-msg li{
-  list-style-type: none; /* Remove default list style */
-  margin-top:0.5rem;
-  padding-left: 1rem; /* Space for custom dot */
+
+.not-configured-msg {
+  padding-left: 0rem;
+}
+
+.not-configured-msg li {
+  list-style-type: none;
+  /* Remove default list style */
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+  /* Space for custom dot */
   position: relative;
 }
-.not-configured-msg li::before{
+
+.not-configured-msg li::before {
   background-color: var(--text-secondary);
   border-radius: 50%;
   content: '';
