@@ -35,7 +35,7 @@
     <!-- Service List -->
 
     <div
-      v-else-if="services.length"
+      v-else-if="services?.length"
       class="page-container"
       :style="{ '--dynamic-height': dynamicHeight + 'px' }"
     >
@@ -66,7 +66,7 @@
       v-model="openPopup"
       @close="handleClosePopup"
     >
-      <ServiceDetails :service="currentService" />
+      <ServiceDetails :service="currentService" v-if="currentService" />
     </CustomModal>
   </div>
 </template>

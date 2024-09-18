@@ -36,7 +36,10 @@ export const useServiceStore = defineStore('services',()=>{
   const getServiceById = (id: string): Service | undefined => {
     return services.value.find(service => service.id === id)
   }
-
+// Mutation to set services
+const setServices = (newServices: Service[]) => {
+  services.value = newServices
+}
   // Computed properties for pagination
   const totalPages = computed(() => Math.ceil(services.value.length / pageSize.value))
   const totalServices = computed(() =>services.value.length)
@@ -74,6 +77,7 @@ export const useServiceStore = defineStore('services',()=>{
     setPageSize,
     totalServices,
     getServiceById,
+    setServices
   }
 
 })

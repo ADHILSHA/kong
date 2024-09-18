@@ -2,6 +2,7 @@
   <div
     v-if="isVisible"
     class="popup-overlay"
+    data-test="custom-modal"
     @click.self="closePopup"
   >
     <div class="popup-content">
