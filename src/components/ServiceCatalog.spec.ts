@@ -46,7 +46,7 @@ const mockServices: Service[] = [
     id: '2',
     name: 'Service B',
     description: 'This is Service B.',
-    type: 'GraphQL',
+    type: 'HTTP',
     published: false,
     configured: true,
     versions: [

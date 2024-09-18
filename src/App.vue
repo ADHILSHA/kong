@@ -1,10 +1,5 @@
 <template>
   <header>
-    <!-- <div class="nav">
-      <router-link to="/">
-        Home
-      </router-link>
-    </div> -->
     <NavBar />
   </header>
   <main class="main-content">
@@ -14,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import NavBar from '@/components/NavBar.vue'
+import NavBar from './components/NavBar.vue';
 import '@/assets/styles/global.css'
 
 export default defineComponent({

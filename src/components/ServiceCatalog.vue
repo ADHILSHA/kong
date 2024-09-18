@@ -139,12 +139,10 @@ export default defineComponent({
       debouncedFetchServices(newQuery)
     }, { immediate: true }) // Trigger fetch on component mount
     const handleOpenPopup = (ser: Service) => {
-      // if (ser.versions?.length) {
       currentService.value = ser
       openPopup.value = true
       // Set the query parameter
       router.push({ query: { ...router.currentRoute.value.query, id: ser.id } })
-      // }
     }
     // Using computed to ensure reactivity
     const services = computed(() => serviceStore.paginatedServices)
@@ -243,10 +241,12 @@ input {
   grid-template-columns: repeat(3, 1fr);
   /* 3 columns by default */
   grid-template-rows: auto;
+  grid-auto-rows: min-content; 
   /* Allow rows to adjust based on content */
   margin-top: 1.5rem;
   /* Takes up remaining space above Div 2 */
   overflow-y: auto;
+  align-content: start;
   /* Makes it scrollable */
   // padding: 16px;
 

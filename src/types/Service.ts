@@ -2,7 +2,7 @@ export interface Service {
   id:string;
   name:string;
   description:string;
-  type:'REST'|'GraphQL';
+  type:'REST'|'HTTP';
   published:boolean;
   configured:boolean;
   versions:Version[];
